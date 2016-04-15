@@ -4,10 +4,10 @@
 'use strict'
 
 const express = require('express')
-const Promise = require('bluebird')
+const co = require('co')
 
 const wrap = (genFn) => {
-    var cr = Promise.coroutine(genFn)
+    const cr = co.wrap(genFn)
     return (req, res, next) => {
         cr(req, res, next).catch(next)
     }
@@ -34,4 +34,4 @@ app.listen(3000, () => {
 })
 ```
 
-Source: https://strongloop.com/strongblog/async-error-handling-expressjs-es7-promises-generators/
+Inspiration: https://strongloop.com/strongblog/async-error-handling-expressjs-es7-promises-generators/
